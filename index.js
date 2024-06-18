@@ -25,7 +25,7 @@ const db = new pg.Client({
 
 db.connect();   //start connection to db
 
-let currentUserId = 1;
+let currentUserId = 0;      //initially no user exists
 let usersList = [];
 
 async function getUsers() {
@@ -33,8 +33,13 @@ async function getUsers() {
     usersList = result.rows;
 
     //find user having currentUserId
+    if (currentUserId === 0) {
+        return null;
+    }
+    else {
+        return usersList.find((user) => user.id == currentUserId);
+    }
 
-    return usersList.find((user) => user.id == currentUserId);
 }
 
 //maintain different visited countries-id(serial)   code(char)  user_id(int) references user_id
@@ -60,17 +65,33 @@ app.get('/', async (req, res) => {
         console.log(currentUser);
         // console.log(currentUser.color);
 
+        if (currentUser == null) {
+            res.render('index.ejs', {
+                // converts JavaScript objects (here array) into JSON string
+                // console.log(JSON.stringify(countrydb));  [{"id":1,"code":"FR"},{"id":2,"code":"GB"},{"id":3,"code":"US"}]
+                countryOutput: countrydb,
+                totalCountriesSelected: countrydb.length,
+                errorInput: 'Please create a member first! ',
+                //if users exist then add:
+                users: usersList,
+                fillColor: null,
+            });
+        }
+        else {
+            res.render('index.ejs', {
+                // converts JavaScript objects (here array) into JSON string
+                // console.log(JSON.stringify(countrydb));  [{"id":1,"code":"FR"},{"id":2,"code":"GB"},{"id":3,"code":"US"}]
+                countryOutput: countrydb,
+                totalCountriesSelected: countrydb.length,
 
-        res.render('index.ejs', {
-            // converts JavaScript objects (here array) into JSON string
-            // console.log(JSON.stringify(countrydb));  [{"id":1,"code":"FR"},{"id":2,"code":"GB"},{"id":3,"code":"US"}]
-            countryOutput: countrydb,
-            totalCountriesSelected: countrydb.length,
+                //if users exist then add:
+                users: usersList,
+                fillColor: currentUser.color,
+            });
 
-            //if users exist then add:
-            users: usersList,
-            fillColor: currentUser.color,
-        });
+        }
+
+
     } catch (err) {
         console.error("Some error occurred: ", err.stack);
     }
@@ -81,6 +102,18 @@ app.get('/', async (req, res) => {
 });
 
 app.post("/submit", async (req, res) => {
+
+    if (currentUserId === 0) {
+        let countrydb = []
+        res.render('index.ejs', {
+            countryOutput: countrydb,
+            totalCountriesSelected: countrydb.length,
+            errorInput: 'Cannot insert without a member..create one first! ',
+            fillColor: null,
+        });
+        return; //to stop execution
+    }
+
     // console.log(req.body);  output:{ userInputCountry: 'spain' }
     // console.log(req.body.userInputCountry);         op:spain
 
@@ -120,7 +153,7 @@ app.post("/submit", async (req, res) => {
         // console.log(codeToInsert);
 
         //if already inserted then wrong
-        const isVisited = db.query("SELECT code FROM visited_countries WHERE code=$1 AND user_id=$2", [codeToInsert,currentUserId]);
+        const isVisited = db.query("SELECT code FROM visited_countries WHERE code=$1 AND user_id=$2", [codeToInsert, currentUserId]);
 
         if ((await isVisited).rowCount > 0) {
             //already visited
