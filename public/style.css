@@ -1,0 +1,225 @@
+﻿/* world map */
+.ag-canvas {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    position: relative;
+    visibility: visible;
+
+    width: 94vw;
+    height: 100vh;
+    opacity: 1;
+    transition: opacity 0.5s;
+
+    padding-bottom: 0;
+    z-index: -1;
+}
+
+.ag-canvas_svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    margin-left: 1rem;
+}
+
+.ag-canvas_svg path {
+    fill: #90c221;
+    fill-opacity: 1;
+    stroke: #21252b;
+    stroke-opacity: 1;
+    stroke-width: 0.5;
+    transition: 0.5s;
+}
+
+@media screen and (max-width: 767px) {
+    .ag-canvas {
+        -webkit-flex-flow: row wrap;
+        -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
+        height: auto;
+        padding: 4rem 1rem 1rem;
+    }
+
+    .ag-canvas_svg {
+        max-height: calc(100% - 6rem);
+        margin-left: 0;
+    }
+}
+
+html {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background: #0075c2;
+    font-family: "Roboto", sans-serif;
+    color: #d3ddef;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+input {
+    width: 100%;
+    outline: none;
+    border: none;
+    background: #f2f2f2;
+    margin: 0 0 5px;
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+label {
+    display: block;
+}
+
+#inputName {
+    width: 30%;
+    outline: none;
+    border: none;
+    background: #f2f2f2;
+    margin: 0 0 5px;
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.countyTotal {
+    margin: 0;
+    font-size: 1rem;
+    padding-bottom: 10px;
+    position: absolute;
+    bottom: 0;
+}
+
+button {
+    font-size: 14px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    width: 50px;
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background-color: #d3ddef;
+    color: black;
+    font-weight: 600;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+button:hover {
+    box-shadow: 0 0 2px 1px #d3ddef;
+}
+
+#colors {
+    display: flex;
+    gap: 13px;
+    margin: 10px 5px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked+label div {
+    transform: scale(1.25);
+    border: 1.5px solid black;
+}
+
+.colorOption {
+    height: 23px;
+    width: 25px;
+}
+
+.colorOption:hover {
+    cursor: pointer;
+    transform: scale(1.25);
+}
+
+.colorOption div {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+#red {
+    background-color: red;
+}
+
+#orange {
+    background-color: orange;
+
+}
+
+#green {
+    background-color: green;
+}
+
+#lawngreen {
+
+    background-color: rgb(2 70 92);
+}
+
+#magenta {
+
+    background-color: magenta;
+}
+
+#coral {
+
+    background-color: coral;
+}
+
+#blue {
+
+    background-color: paleturquoise;
+}
+
+#purple {
+    background-color: purple;
+
+}
+
+#pink {
+
+    background-color: palevioletred;
+}
+
+#thistle {
+
+    background-color: thistle;
+}
+
+#newbtn {
+    font-size: 13px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    width: 135px;
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background-color: #d3ddef;
+    color: black;
+    font-weight: 600;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#newbtn:hover {
+    box-shadow: 0 0 2px 1px #d3ddef;
+}
